@@ -1,0 +1,7 @@
+*.cs text eol=lf
+*.cshtml text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.sln text eol=lf
+*.csproj text eol=lf
+*.json text eol=lf

@@ -1,0 +1,275 @@
+{
+  "x-generator": "NSwag v13.17.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v9.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WFC",
+    "version": "v1"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "Get",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/config": {
+      "get": {
+        "operationId": "GetConfig",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/possibleValues/{type}": {
+      "get": {
+        "operationId": "GetPossibleValues",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PossibleValuesDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collapse": {
+      "post": {
+        "operationId": "PostApiCollapse",
+        "requestBody": {
+          "x-name": "CollapseCommand",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollapseCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollapseResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collapse/history": {
+      "post": {
+        "operationId": "PostApiCollapseHistory",
+        "parameters": [
+          {
+            "name": "debug",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "CollapseCommand",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollapseCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollapseWithHistoryResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PossibleValuesDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PossibleValue"
+            }
+          }
+        }
+      },
+      "PossibleValue": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "suitableValuesTop": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suitableValuesRight": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suitableValuesBottom": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suitableValuesLeft": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CollapseResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CollapseCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Element"
+            }
+          }
+        }
+      },
+      "Element": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "CollapseWithHistoryResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valuesHistory": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
