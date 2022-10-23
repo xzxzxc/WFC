@@ -1,6 +1,7 @@
 using AcceptanceTests.Common;
-using Microsoft.Extensions.DependencyInjection;
-using WFC.Extensions;
+using Autofac;
+using Autofac.Extensions;
+using WFC.DI;
 using WFC.Models;
 using Xunit;
 using Xunit.Abstractions;
@@ -19,12 +20,15 @@ public class AcceptanceTests
 	public AcceptanceTests(ITestOutputHelper testOutputHelper)
 	{
 		_testOutputHelper = testOutputHelper;
-		var serviceCollection = new ServiceCollection();
+		var containerBuilder = new ContainerBuilder();
+		containerBuilder.RegisterModule(new WfcModule(randomSeed: 69));
+		containerBuilder.Populate(
+			collection => collection.AddPossibleValues(
+				TestValuesName,
+				TestPossibleValuesCollection.Unicode));
 
-		serviceCollection.AddWfc(TestValuesName, TestPossibleValuesCollection.Unicode, randomSeed: 69);
-
-		_wfc = serviceCollection.BuildServiceProvider()
-			.GetRequiredService<IWfcAlgorithm>();
+		_wfc = containerBuilder.Build()
+			.Resolve<IWfcAlgorithm>();
 	}
 
 	[Fact]
